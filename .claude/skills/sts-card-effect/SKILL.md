@@ -263,21 +263,6 @@ public class Card_Inflame : CardData
 }
 ```
 
-## Effect Templates
-
-Read `templates/effect-templates.md` for complete effect library.
-
-## Implementation Checklist
-
-When implementing a new card:
-
-1. [ ] Define card data (name, type, cost, target)
-2. [ ] Implement effects with correct values
-3. [ ] Add upgrade variant
-4. [ ] Write Chinese description
-5. [ ] Test in combat
-6. [ ] Verify balance
-
 ## Balance Guidelines
 
 | Cost | Expected Value |
@@ -286,7 +271,3 @@ When implementing a new card:
 | 1 | Standard (5-6 damage, 5 block) |
 | 2 | Strong (10-12 damage, major effect) |
 | 3 | Very strong (20+ damage, game-changing) |
-
-## References
-
-See game-task-spec for card data JSON format.

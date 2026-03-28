@@ -258,7 +258,3 @@ Use this format to track integration bugs:
 5. Game loop sequence testing
 6. Bug fixing and polish
 7. Final playthrough test
-
-## References
-
-Read `references/integration-checklist.md` for complete testing guide.

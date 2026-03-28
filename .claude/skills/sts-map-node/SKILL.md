@@ -357,7 +357,3 @@ public static class NodeFactory
 5. [ ] Connect to other systems
 6. [ ] Test node flow
 7. [ ] Verify balance
-
-## References
-
-Read `references/node-rewards.md` for reward calculation guidelines.

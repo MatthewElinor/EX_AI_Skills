@@ -223,7 +223,3 @@ Write individual event scenarios for a Slay the Spire-like roguelike card game.
 6. [ ] Add requirements (if any)
 7. [ ] Test event flow
 8. [ ] Verify balance
-
-## Templates
-
-Read `templates/event-templates.md` for more event examples.

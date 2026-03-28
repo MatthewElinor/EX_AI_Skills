@@ -162,7 +162,3 @@ Fire:
 5. MapUI visualization
 6. Node entry/exit handlers
 7. Connect to game flow
-
-## References
-
-Read `references/map-generation-algorithm.md` for detailed generation logic.

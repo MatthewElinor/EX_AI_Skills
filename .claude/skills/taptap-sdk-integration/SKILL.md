@@ -151,7 +151,3 @@ Assets/Scripts/Platform/TapTap/
 - [ ] Share works (if implemented)
 - [ ] No crashes from SDK calls
 - [ ] WebGL build includes SDK
-
-## References
-
-Read `references/sdk-usage.md` for complete API reference.

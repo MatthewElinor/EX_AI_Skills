@@ -176,7 +176,3 @@ Fire:
 5. RelicUI display
 6. Connect to combat via triggers
 7. Implement initial relics via sts-relic-effect
-
-## References
-
-Read `references/trigger-timings.md` for complete trigger documentation.

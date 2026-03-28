@@ -181,7 +181,3 @@ Fire:
 4. EventUI screen
 5. Connect to map node entry
 6. Create initial events via sts-event-script
-
-## References
-
-Read `references/event-examples.md` for more event designs.

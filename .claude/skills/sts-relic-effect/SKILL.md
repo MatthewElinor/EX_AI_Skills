@@ -231,7 +231,3 @@ When implementing a new relic:
 | Uncommon | Strong | Energy gain, damage boost |
 | Rare | Very Strong | Unique mechanics, game-changing |
 | Boss | Major | Significant permanent advantage |
-
-## Templates
-
-Read `templates/trigger-templates.md` for more effect patterns.

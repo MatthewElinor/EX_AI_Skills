@@ -114,8 +114,6 @@ Key fields:
 
 ## Balance Guidelines
 
-Read `templates/balance-guide.md` for detailed values.
-
 ### Quick Reference
 
 **Card Cost vs Power**:
@@ -197,10 +195,3 @@ Read `templates/balance-guide.md` for detailed values.
 4. Every card must have `upgrade` variant
 5. Effects use standardized format
 6. Descriptions in Chinese, action-oriented
-
-## Templates
-
-- `templates/card-schema.json` - Full card schema
-- `templates/relic-schema.json` - Full relic schema
-- `templates/event-schema.json` - Full event schema
-- `templates/balance-guide.md` - Balance reference

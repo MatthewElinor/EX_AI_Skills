@@ -179,8 +179,3 @@ Fire these events:
 5. HandUI with interaction
 6. Connect to combat system
 7. Implement initial cards via sts-card-effect
-
-## References
-
-Read `references/card-mechanics.md` for detailed mechanics.
-Read `references/deck-flow-diagram.md` for visual flow.

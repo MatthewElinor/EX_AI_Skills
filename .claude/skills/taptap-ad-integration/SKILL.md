@@ -237,7 +237,3 @@ void OnAdRewarded(string placementId, TapTapReward reward)
 - [ ] Audio pauses during ad
 - [ ] Game resumes after ad
 - [ ] Failed ads handled gracefully
-
-## References
-
-Read `references/ad-placement-guide.md` for placement best practices.

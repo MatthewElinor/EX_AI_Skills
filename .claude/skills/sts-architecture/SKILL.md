@@ -153,7 +153,7 @@ public static class EventBus
 
 ## Data Schema Design
 
-Read `templates/card-schema.json`, `templates/relic-schema.json`, `templates/event-schema.json` for detailed schemas.
+Schemas for Card, Relic, and Event data are defined by `/sts-data-design` skill. Use that skill when creating detailed data structures.
 
 ### Data Loading Strategy
 

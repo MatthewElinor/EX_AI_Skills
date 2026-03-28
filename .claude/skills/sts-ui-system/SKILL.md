@@ -224,7 +224,3 @@ Flat cartoon style:
 10. GameOver screen
 11. Settings screen
 12. Transitions and animations
-
-## References
-
-Read `references/ui-modules-list.md` for complete component listing.

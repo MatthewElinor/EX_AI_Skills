@@ -21,12 +21,10 @@ Master skill that orchestrates all TapTap platform integration tasks for Unity W
 ### Step 1: Platform Research
 
 Before integration, understand TapTap's requirements:
-- Package size limits
+- Package size limits (recommended <30MB)
 - SDK versions required
 - Ad placement policies
 - Submission checklist
-
-Read `references/taptap-requirements.md` for details.
 
 ### Step 2: SDK Integration (Sequential)
 
