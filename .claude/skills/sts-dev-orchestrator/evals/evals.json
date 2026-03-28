@@ -1,0 +1,61 @@
+{
+  "skill_name": "sts-dev-orchestrator",
+  "evals": [
+    {
+      "id": 1,
+      "name": "start-development",
+      "prompt": "我想开始开发一个类杀戮尖塔的卡牌游戏，帮我规划一下",
+      "expected_output": "应该调用sts-dev-orchestrator，开始Phase 1架构搭建阶段",
+      "should_trigger": true
+    },
+    {
+      "id": 2,
+      "name": "continue-development",
+      "prompt": "继续开发我的卡牌Roguelike游戏",
+      "expected_output": "应该读取.sts-dev-state.json，确定当前阶段并继续",
+      "should_trigger": true
+    },
+    {
+      "id": 3,
+      "name": "check-progress",
+      "prompt": "我的游戏开发进度怎么样了",
+      "expected_output": "应该读取进度文件并报告当前状态",
+      "should_trigger": true
+    },
+    {
+      "id": 4,
+      "name": "next-step",
+      "prompt": "下一步做什么",
+      "expected_output": "根据当前阶段给出下一步任务",
+      "should_trigger": true
+    },
+    {
+      "id": 5,
+      "name": "casual-start",
+      "prompt": "帮我做一个卡牌游戏",
+      "expected_output": "如果用户确认是类杀戮尖塔游戏，应触发此Skill",
+      "should_trigger": true
+    },
+    {
+      "id": 6,
+      "name": "different-genre",
+      "prompt": "我想开发一个FPS射击游戏",
+      "expected_output": "不应触发此Skill，因为不是卡牌Roguelike类型",
+      "should_trigger": false
+    },
+    {
+      "id": 7,
+      "name": "card-system-only",
+      "prompt": "帮我实现卡牌系统",
+      "expected_output": "应调用sts-card-system子Skill，而非直接由orchestrator处理",
+      "should_trigger": true
+    },
+    {
+      "id": 8,
+      "name": "existing-project",
+      "prompt": "我有一个Unity项目，想把它改造成卡牌游戏",
+      "expected_output": "应触发此Skill，从架构评估开始",
+      "should_trigger": true
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RelicData",
+  "description": "Schema for relic data in Slay the Spire-like card game",
+  "type": "object",
+  "required": ["id", "name", "tier", "trigger", "description"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier in snake_case",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name in Chinese"
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["Starter", "Common", "Uncommon", "Rare", "Boss", "Shop"],
+      "description": "Relic rarity tier"
+    },
+    "trigger": {
+      "type": "string",
+      "enum": [
+        "OnBattleStart",
+        "OnBattleEnd",
+        "OnTurnStart",
+        "OnTurnEnd",
+        "OnCardPlayed",
+        "OnAttackPlayed",
+        "OnSkillPlayed",
+        "OnPowerPlayed",
+        "OnDamageTaken",
+        "OnDamageDealt",
+        "OnEnemyKilled",
+        "OnGoldGained",
+        "OnCardObtained",
+        "OnRelicObtained",
+        "OnShuffle",
+        "OnExhaust",
+        "Passive"
+      ],
+      "description": "When the relic effect triggers"
+    },
+    "effect_type": {
+      "type": "string",
+      "enum": ["StatBuff", "Heal", "Block", "Draw", "GainEnergy", "GainGold", "GainCard", "ApplyDebuff", "Special"],
+      "description": "Type of effect to apply"
+    },
+    "effect_value": {
+      "type": "integer",
+      "description": "Primary effect value"
+    },
+    "effect_value_secondary": {
+      "type": "integer",
+      "description": "Secondary effect value (for multi-effects)"
+    },
+    "counter_max": {
+      "type": "integer",
+      "description": "Maximum counter value for counting relics"
+    },
+    "description": {
+      "type": "string",
+      "description": "Relic description in Chinese"
+    },
+    "flavor_text": {
+      "type": "string",
+      "description": "Optional flavor text"
+    },
+    "icon_path": {
+      "type": "string",
+      "description": "Path to relic icon image"
+    },
+    "stackable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether multiple copies stack"
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EventData",
+  "description": "Schema for event data in Slay the Spire-like card game",
+  "type": "object",
+  "required": ["id", "name", "type", "description", "options"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier in snake_case",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Event name in Chinese"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["Trade", "Risk", "Choice", "Story"],
+      "description": "Event type determines structure"
+    },
+    "description": {
+      "type": "string",
+      "description": "Event description text in Chinese"
+    },
+    "image": {
+      "type": "string",
+      "description": "Path to event illustration image"
+    },
+    "min_floor": {
+      "type": "integer",
+      "default": 1,
+      "description": "Minimum floor where this event can appear"
+    },
+    "max_floor": {
+      "type": "integer",
+      "default": 4,
+      "description": "Maximum floor where this event can appear"
+    },
+    "weight": {
+      "type": "integer",
+      "default": 1,
+      "description": "Relative probability weight"
+    },
+    "options": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "$ref": "#/definitions/EventOption"
+      },
+      "description": "Player choices for this event"
+    }
+  },
+  "definitions": {
+    "EventOption": {
+      "type": "object",
+      "required": ["text"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Option text shown to player in Chinese"
+        },
+        "cost": {
+          "$ref": "#/definitions/Cost",
+          "description": "What the player pays"
+        },
+        "reward": {
+          "$ref": "#/definitions/Reward",
+          "description": "What the player gains"
+        },
+        "requirement": {
+          "$ref": "#/definitions/Requirement",
+          "description": "Conditions to show this option"
+        },
+        "risk_outcomes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RiskOutcome"
+          },
+          "description": "Random outcomes for Risk type events"
+        },
+        "encounter": {
+          "type": "string",
+          "description": "Special encounter ID (e.g., elite_battle)"
+        },
+        "encounter_reward": {
+          "$ref": "#/definitions/Reward",
+          "description": "Reward if special encounter is won"
+        }
+      }
+    },
+    "Cost": {
+      "type": "object",
+      "properties": {
+        "gold": {
+          "type": "integer",
+          "description": "Gold to pay"
+        },
+        "hp": {
+          "type": "integer",
+          "description": "HP to lose"
+        },
+        "random_card": {
+          "type": "integer",
+          "description": "Number of random cards to lose"
+        },
+        "max_hp_percent": {
+          "type": "integer",
+          "description": "Percentage of max HP to lose"
+        }
+      }
+    },
+    "Reward": {
+      "type": "object",
+      "properties": {
+        "gold": {
+          "type": "integer",
+          "description": "Gold gained"
+        },
+        "heal": {
+          "type": "integer",
+          "description": "HP restored"
+        },
+        "heal_percent": {
+          "type": "integer",
+          "description": "Percentage of max HP restored"
+        },
+        "card_rarity": {
+          "type": "string",
+          "enum": ["Common", "Uncommon", "Rare"],
+          "description": "Rarity of card reward"
+        },
+        "relic_tier": {
+          "type": "string",
+          "enum": ["Common", "Uncommon", "Rare", "Boss"],
+          "description": "Tier of relic reward"
+        },
+        "permanent_strength": {
+          "type": "integer",
+          "description": "Permanent strength gained"
+        },
+        "energy": {
+          "type": "integer",
+          "description": "Energy gained"
+        },
+        "cards_drawn": {
+          "type": "integer",
+          "description": "Cards drawn"
+        }
+      }
+    },
+    "Requirement": {
+      "type": "object",
+      "properties": {
+        "min_gold": {
+          "type": "integer",
+          "description": "Minimum gold required"
+        },
+        "min_hp": {
+          "type": "integer",
+          "description": "Minimum HP required"
+        },
+        "min_hp_percent": {
+          "type": "integer",
+          "description": "Minimum HP percentage required"
+        },
+        "has_relic": {
+          "type": "string",
+          "description": "Required relic ID"
+        }
+      }
+    },
+    "RiskOutcome": {
+      "type": "object",
+      "required": ["weight", "text"],
+      "properties": {
+        "weight": {
+          "type": "integer",
+          "description": "Relative probability weight"
+        },
+        "text": {
+          "type": "string",
+          "description": "Outcome text in Chinese"
+        },
+        "cost": {
+          "$ref": "#/definitions/Cost"
+        },
+        "reward": {
+          "$ref": "#/definitions/Reward"
+        }
+      }
+    }
+  }
+}
