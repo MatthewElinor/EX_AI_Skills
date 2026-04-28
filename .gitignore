@@ -1,2 +1,5 @@
+.idea/
+.claude/*
+!.claude/skills/
 LICENSE
 __pycache__/
