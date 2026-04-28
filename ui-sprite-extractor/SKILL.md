@@ -25,6 +25,19 @@ description: |
 
 ---
 
+## 输入兼容性
+
+此工具接受任何带透明通道的PNG图集：
+
+| 输入来源 | 背景 | 说明 |
+|---------|------|------|
+| **方案A：去背景后** | 透明 | 经 `ui-image-processor` 处理后的图集 |
+| **方案B：gpt-image-2 直出** | 透明 | AI 直接生成的透明背景PNG，跳过去背景步骤 |
+
+**gpt-image-2 透明背景直出**时，可直接使用此工具切图，无需先经过 `ui-image-processor`。
+
+---
+
 ## 核心算法
 
 ```
@@ -196,13 +209,13 @@ python sprite_extractor.py -i atlas.png -o ./sprites/ --padding 10
 
 | Skill | 功能 | 使用时机 |
 |-------|------|----------|
-| **ui-image-processor** | 去背景 | 先处理白底和毛边 |
-| **ui-sprite-extractor** | 切图 | 再提取独立UI元素 |
+| **ui-image-processor** | 去背景 | 仅方案A需要（NanoBanana2白底） |
+| **ui-sprite-extractor** | 切图 | 方案A/B都需要 |
 
-**典型工作流：**
+**方案A工作流（NanoBanana2 白底）：**
 
 ```
-原始UI图集.png
+原始UI图集.png（白色背景）
     ↓
 [ui-image-processor] 去背景
     ↓
@@ -212,3 +225,15 @@ python sprite_extractor.py -i atlas.png -o ./sprites/ --padding 10
     ↓
 sprite_001.png, sprite_002.png, ...
 ```
+
+**方案B工作流（gpt-image-2 透明直出）：**
+
+```
+原始UI图集.png（透明背景，AI直出）
+    ↓
+[ui-sprite-extractor] 切图（跳过去背景）
+    ↓
+sprite_001.png, sprite_002.png, ...
+```
+
+> **方案B 优势**：省去 `ui-image-processor` 步骤，流程更简洁，成本更低。
