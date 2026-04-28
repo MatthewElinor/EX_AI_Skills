@@ -88,7 +88,7 @@ ui-extraction-from-screenshot（提取流）
 ## 技术要点
 
 ### 生成流
-- **AI生图**: 使用 IkunCode API，支持 NanoBanana2 (Gemini Flash) 模型
+- **AI生图**: 使用 IkunCode API，支持 NanoBanana2 和 gpt-image-2 模型
 - **去背景**: 洪水填充算法，阈值250，膨胀15像素，混合系数0.9
 - **切图**: 连通区域分析，支持透明PNG输入，自动提取独立UI元素
 - **布局计算**: 默认间距30像素，容错AI生图尺寸不确定性

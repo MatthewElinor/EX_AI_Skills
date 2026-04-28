@@ -41,22 +41,24 @@ metadata:
         ↓
 [Step 0] 列出UI元素，用户选择范围
         ↓
-[Step 1] AI提取UI图集（ikunimage图生图）
+[Step 0.5] 选择提取方案（A: NanoBanana2+去背景 / B: gpt-image-2透明直出）
         ↓
-    ui_atlas.png（白色背景图集）
-        ↓
-[Step 2] 去背景（ui-image-processor）
-        ↓
-    ui_atlas_clean.png（透明背景图集）
-        ↓
-[Step 3] 智能切图（ui-sprite-extractor）
-        ↓
-    sprite_001.png, sprite_002.png, ...（独立UI元素）
+┌───────────────────────────────────────────────────────────────┐
+│ 方案A: [Step 1] AI提取 → [Step 2] 去背景 → [Step 3] 切图      │
+│ 方案B: [Step 1] AI提取(透明) → [Step 3] 切图（跳过去背景）    │
+└───────────────────────────────────────────────────────────────┘
         ↓
 [Step 4] 相似度去重（ui_similarity_dedup.py）
         ↓
     最终输出文件夹：unique UI elements
 ```
+
+**方案对比：**
+
+| 方案 | 模型 | 背景 | 步骤数 | 优势 | 适用场景 |
+|------|------|------|--------|------|---------|
+| **A（推荐）** | NanoBanana2 | 白色 | 5步 | 稳定可靠 | 首次提取、重要UI |
+| **B（省步骤）** | gpt-image-2 | 透明 | 4步（跳过去背景） | 省时省钱 | 批量提取、熟练使用 |
 
 ---
 
@@ -120,9 +122,16 @@ metadata:
 
 ## Step 1: AI提取UI图集
 
-使用 NanoBanana2 图生图，从效果图中提取UI元素。
+使用 ikunimage 图生图，从效果图中提取UI元素。支持两种方案。
 
-### 最佳Prompt（方案A：直接提取型）
+### Step 0.5: 选择提取方案
+
+询问用户：
+> "请选择提取方案："
+> - **方案A（推荐）**：NanoBanana2 + 后续去背景（稳定可靠，¥0.125/次）
+> - **方案B（省步骤）**：gpt-image-2 透明背景直出（省去去背景步骤，¥0.06/次，可能不稳定）
+
+### 最佳Prompt（方案A：白色背景提取）
 
 **全部提取**：
 ```
@@ -150,13 +159,29 @@ metadata:
 输出：2048x2048像素的UI素材图集，白色背景
 ```
 
+### 最佳Prompt（方案B：透明背景提取）
+
+**注意**：方案B无需添加 "white background"，使用 `--transparent` 参数自动注入透明背景提示词。
+
+**全部提取**（透明背景）：
+```
+从这张游戏界面效果图中提取所有UI素材元素。
+
+提取要求：
+- 把图中所有UI面板、按钮、框体、装饰元素都单独分离出来
+- 去除所有文字和数字，保留空白框体
+- 去除背景中的赛车、场景等非UI内容
+- 所有UI元素水平排列在图集上，按游戏UI图集的标准格式输出
+
+输出：2048x2048像素的UI素材图集
+```
+
 ### 执行命令
 
+**方案A（NanoBanana2 白底）**：
 ```bash
-# 确保输出目录存在
 mkdir -p ./outimage/ikunimage/
 
-# AI提取
 ~/.hermes/.venv/bin/python ~/.hermes/skills/ikunimage/scripts/generate_ikun_edit.py \
   --input /path/to/screenshot.png \
   --prompt "提取prompt内容..." \
@@ -164,11 +189,30 @@ mkdir -p ./outimage/ikunimage/
   --retry 3
 ```
 
+**方案B（gpt-image-2 透明背景）**：
+```bash
+~/.hermes/.venv/bin/python ~/.hermes/skills/ikunimage/scripts/generate_ikun_edit.py \
+  --model gpt-image-2 --transparent \
+  --input /path/to/screenshot.png \
+  --prompt "提取prompt内容（无需 white background）..." \
+  --output ./outimage/ikunimage/ui_atlas_{timestamp}.png \
+  --retry 10
+```
+
 ---
 
-## Step 2: 去背景
+## Step 2: 去背景（仅方案A需要）
+
+**方案B（透明背景直出）跳过此步骤，直接进入 Step 3 切图。**
 
 去除AI生成的白色背景和毛边。
+
+### 适用场景
+
+| 方案 | 是否需要去背景 | 输入 |
+|------|---------------|------|
+| **A** | ✓ 需要 | 白色背景图集 |
+| **B** | ✗ 跳过 | 直接用透明背景图集切图 |
 
 ### 执行命令
 
@@ -193,11 +237,28 @@ mkdir -p ./outimage/ikunimage/
 
 将图集切分为独立的UI元素。
 
+### 输入区分
+
+| 方案 | 输入文件 | 说明 |
+|------|---------|------|
+| **A** | `ui_atlas_clean.png`（去背景后的图集） | 需先完成 Step 2 去背景 |
+| **B** | `ui_atlas.png`（原始透明背景图集） | 直接切图，无需去背景 |
+
 ### 执行命令
 
+**方案A（去背景后切图）**：
 ```bash
 ~/.hermes/.venv/bin/python ~/.hermes/skills/ui-sprite-extractor/scripts/sprite_extractor.py \
   --input ./outimage/ikunimage/ui_atlas_clean.png \
+  --output-dir ./outimage/ikunimage/sprites/ \
+  --min-area 500 --gap 30 --padding 4 \
+  --prefix "ui"
+```
+
+**方案B（透明图集直接切图）**：
+```bash
+~/.hermes/.venv/bin/python ~/.hermes/skills/ui-sprite-extractor/scripts/sprite_extractor.py \
+  --input ./outimage/ikunimage/ui_atlas.png \
   --output-dir ./outimage/ikunimage/sprites/ \
   --min-area 500 --gap 30 --padding 4 \
   --prefix "ui"
